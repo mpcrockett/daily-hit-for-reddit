@@ -10,7 +10,6 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import postsReducer from '../components/tileContainer/postSlice';
-import authReducer from '../pages/auth/authSlice';
 import themeReducer from '../pages/homePage/themeSlice';
 import userReducer from '../pages/profilePage/userSlice';
 
@@ -21,7 +20,7 @@ const persistConfig = {
 };
 
 const combinedReducers = combineReducers(
-  { posts: postsReducer, auth: authReducer, theme: themeReducer, user: userReducer }
+  { posts: postsReducer, theme: themeReducer, user: userReducer }
   );
 
 const persistedReducer = persistReducer(persistConfig, combinedReducers);

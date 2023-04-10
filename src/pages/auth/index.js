@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authorizeUser } from './authSlice';
+import { authorizeUser } from '../profilePage/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -13,7 +13,7 @@ export const Auth = () => {
   const [urlState, setUrlState] = useState( params.get('state') || null);
   const [urlCode, setUrlCode] = useState(params.get('code'));
 
-  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
+  const isLoggedIn = useSelector((state) => state.user.loggedIn);
 
   useEffect(() => {
     dispatch(authorizeUser(urlCode, urlState));

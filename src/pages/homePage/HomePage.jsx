@@ -6,7 +6,7 @@ import { getUserInfo } from '../profilePage/userSlice'
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const { loggedIn } = useSelector((state) => state.auth);
+  const { loggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
     if(loggedIn) dispatch(getUserInfo());

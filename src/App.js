@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme';
-import { getUrl } from './pages/auth/authSlice';
 import ProfilePage from 'pages/profilePage/ProfilePage';
 
 function App() {
