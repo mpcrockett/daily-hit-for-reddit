@@ -6,7 +6,7 @@ const axios = require('axios');
 
 const responseType = 'code';
 const duration = 'permanent';
-const scope = 'identity, vote, mysubreddits, subscribe';
+const scope = 'identity, vote, mysubreddits, subscribe, read';
 const state = '123456789'; //await generateRandomString(10);
 
 
@@ -40,14 +40,12 @@ authRouter.post('/login', async (req, res) => {
     
     const { access_token, refresh_token, expires_in } = response.data;
 
-    const token = {
+    req.session.token = {
       access_token,
       refresh_token,
       expiresAt: Date.now() + (1000 * expires_in),
     };
-
-    req.session.token = token;
-    res.status(200).send({ mesage: "Token set."});
+    res.status(200).send({ message: "Token set."});
   } catch (err) {
     res.status(500).send({message: err.message});
   } 

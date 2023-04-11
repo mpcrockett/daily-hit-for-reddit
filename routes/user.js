@@ -2,15 +2,15 @@ const express = require('express');
 const userRouter = express.Router();
 const axios = require('axios');
 
-const baseUrl = 'https://oauth.reddit.com'
+const baseUrl = process.env.BASE_URL;
 
 userRouter.get('/', async (req, res) => {
   const { access_token } = req.session.token;
   try {
-    const response = await axios.get("https://oauth.reddit.com/api/v1/me", {
+    const response = await axios.get(baseUrl + "/api/v1/me", {
       headers: {
         "Authorization": `bearer ${access_token}`,
-        "User-Agent": "NodeJS:Daily Hit of Dopamine For Reddit:v1.0 by /u/NEAustinite"
+        "User-Agent": process.env.USER_AGENT
       }
     });
     res.status(200).send(response.data);

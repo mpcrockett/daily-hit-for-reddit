@@ -1,15 +1,12 @@
 const encodedHeader = require('../utils/encodedHeader');
 
 module.exports = async (req, res, next) => {
-  console.log(req.sessionStore.token);
-
   let expiresAt = req.session.token.expiresAt;
-  let refresh_token = req.session.token.refresh_token;
 
   if( Date.now() > expiresAt ) {
     const response = await axios.post('https://www.reddit.com/api/v1/access_token', {
         grant_type: 'refresh_token',
-        refresh_token,
+        refresh_token: req.session.token.access_token,
       }, {
       headers: {
         authorization: `basic ${encodedHeader}`,
@@ -29,6 +26,5 @@ module.exports = async (req, res, next) => {
       expiresAt: Date.now() + (1000 * expires_in),
     };
   };
-
   next();
 };
