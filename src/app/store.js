@@ -9,7 +9,7 @@ import {
   REGISTER 
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import postReducer from '../components/tile/postSlice';
+import postReducer from '../components/postsContainer/postSlice';
 import themeReducer from '../pages/homePage/themeSlice';
 import userReducer from '../pages/profilePage/userSlice';
 

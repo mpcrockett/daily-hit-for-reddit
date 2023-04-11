@@ -32,7 +32,7 @@ export function getUserInfo(){
       const response = await axios.get('/api/user', { withCredentials: true });
       if(response.status === 200) dispatch(setUser(response.data));
     } catch (error) {
-      window.alert("Error!")
+      console.log({ error: error.message })
     }
   };
 };

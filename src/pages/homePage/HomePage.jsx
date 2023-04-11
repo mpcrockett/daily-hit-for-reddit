@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import Navbar from 'components/navBar/NavBar.jsx'
-import TileContainer from 'components/tile/TileContainer'
 import { getUserInfo } from '../profilePage/userSlice'
-import Menu from 'components/subredditMenu/Menu'
+import PostContainer from 'components/postsContainer/PostContainer';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -16,8 +15,7 @@ const HomePage = () => {
   return ( 
     <>
     <Navbar />
-    <Menu />
-    <TileContainer />
+    <PostContainer />
     </>
   );
 }
