@@ -11,6 +11,7 @@ function TextCard(props) {
         avatar={<Avatar alt={post.subreddit} src={subredditIcon} />}
         title={'Posted by ' + post.author + ' in r/' + post.subreddit}
         subheader={timestamp}
+        sx={{ height: '65px'}}
       />
       <CardContent sx={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column"}}>
         <Typography variant='h4' sx={{ marginBottom: '10px'}}>{post.title}</Typography>

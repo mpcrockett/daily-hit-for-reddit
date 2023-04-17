@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Avatar, Chip, Box, useMediaQuery } from '@mui/material'
-import { toggleSubreddit } from './postSlice'
+import { toggleSubreddit } from '../postsContainer/postSlice'
 
 function Menu() {
   const { subreddits } = useSelector(state => state.posts);

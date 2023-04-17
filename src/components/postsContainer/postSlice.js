@@ -20,7 +20,7 @@ export const postSlice = createSlice({
           iconImg: x.data.icon_img, 
           description: x.data.public_description, 
           url: x.data.url,
-          active: true
+          active: false
         }
         ));
       state.subreddits = array;
@@ -44,7 +44,7 @@ export const postSlice = createSlice({
         subreddit_id: x.data.subreddit_id,
         gallery_data: x.data.gallery_data || null,
         preview: x.data.preview || null,
-        media: x.data.media,
+        media_metadata: x.data.media_metadata || null,
         title: x.data.title,
         author: x.data.author,
         flair : x.data.flair_text,

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Box } from '@mui/material'
 import CardContainer from './CardContainer'
-import Menu from './Menu'
+import Menu from '../subredditChips/Chips'
 import { useSelector, useDispatch } from 'react-redux'
 import { getUserSubreddits } from './postSlice'
 
