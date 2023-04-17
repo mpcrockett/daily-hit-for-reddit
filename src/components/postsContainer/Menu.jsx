@@ -1,29 +1,33 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Avatar, Chip, Typography, Stack } from '@mui/material'
+import { Avatar, Chip, Box, useMediaQuery } from '@mui/material'
 import { toggleSubreddit } from './postSlice'
 
 function Menu() {
   const { subreddits } = useSelector(state => state.posts);
+  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const dispatch = useDispatch();
 
-  const handleClick = (subId) => {
-    dispatch(toggleSubreddit(subId));
+  const handleClick = (id) => {
+    dispatch(toggleSubreddit(id));
   };
 
   return (
-    <Stack direction="column" spacing={1} sx={{ width: '20%', m: 2 }} >
-    <Typography fontWeight="bold" fontSize="clamp(0.5rem, 1rem, 1.5rem)">Subreddits</Typography>
+    <Box sx={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", flexWrap: "wrap", marginTop: 1}}>
       {subreddits.map(sub => 
         <Chip 
           avatar={<Avatar alt={sub.name} src={sub.iconImg} />} 
           label={sub.name} 
           key={sub.id} 
           variant={sub.active ? "outlined" : "primary"}
+          sx={{ margin: 0.5, boxShadow: 0.5 }}
           onClick={() => handleClick(sub.id)}
-          clickable 
+          clickable
+          size="medium"
         /> 
       )}
-    </Stack>
+    </Box>
    
   );
 }

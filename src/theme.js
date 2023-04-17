@@ -74,6 +74,10 @@ export const themeSettings = (mode) => {
       mode: mode,
       ...(mode === "dark" ? darkPalette : lightPalette),
     },
+    breakpoints: {
+      keys: ["xs", "sm", "md", "lg", "xl", "xxl"],
+      values: { xs: 0, sm: 568, md: 760, lg: 960, xl: 1200, xxl: 1400 }
+    },
     typography: {
       fontFamily: ["Inter", "sans-serif"].join(","),
       fontSize: 12,

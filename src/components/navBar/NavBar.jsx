@@ -28,7 +28,7 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   return ( 
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+    <FlexBetween padding="1rem 6%" backgroundColor={alt} marginTop={4} >
       <FlexBetween gap="1.75rem">
         <Typography fontWeight="bold" fontSize="clamp(1rem, 2rem, 2.25rem)" color="primary" onClick={() => navigate("/")} sx={{ "&:hover": { color: primaryLight, cursor: "pointer", } }} >
           Daily Hit of Reddit
