@@ -50,9 +50,28 @@ export const postSlice = createSlice({
         flair : x.data.flair_text,
         thumbnail: x.data.thumbnail,
         selftext: x.data.selftext,
+        fullname: x.data.name,
         url: x.data.url,
         created: x.data.created,
+        upvoted: false,
+        downvoted: false
       }));
+      state.posts = array;
+    },
+    voted(state, action) {
+      const array = state.posts.map((post) => {
+        if(post.fullname === action.payload.fullname) {
+          if(action.payload.value === '1') {
+            return {...post, upvoted: true, downvoted: false }
+          } else if (action.payload.value === '-1') {
+            return {...post, upvoted: false, downvoted: true }
+          } else {
+            return {...post, upvoted: false, downvoted: false} 
+          }
+        } else { 
+          return post
+        }
+      })
       state.posts = array;
     }
   }
@@ -81,6 +100,17 @@ export function getPosts(){
   };
 };
 
-export const { postsAdded, subredditsFetched, toggleSubreddit, postsFetched } = postSlice.actions;
+export function voteOnPost(fullname, value) {
+  return async function upvotePostThunk(dispatch) {
+    try {
+      const response = await axios.post('/api/posts/vote', { fullname, value }, { withCredentials: true });
+      if(response.status === 200) dispatch(voted({ fullname, value }));
+    } catch (error) {
+      console.log({ error: error.message })
+    }
+  }
+}
+
+export const { postsAdded, subredditsFetched, toggleSubreddit, postsFetched, voted } = postSlice.actions;
 
 export default postSlice.reducer;

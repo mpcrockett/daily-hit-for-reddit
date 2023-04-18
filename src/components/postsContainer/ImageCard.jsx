@@ -1,8 +1,8 @@
-import { Box, Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography } from '@mui/material';
-import { KeyboardArrowUp, KeyboardArrowDown, ArrowForwardIos } from '@mui/icons-material';
+import { Box, Card, CardHeader, CardMedia, CardContent, Avatar, Typography, IconButton, Button  } from '@mui/material';
+import { ArrowForwardIos } from '@mui/icons-material';
 import { useState } from 'react';
 import _ from 'lodash';
-
+import VoteButtons from './VoteButtons';
 
 function ImageCard(props) {
   const { post, timestamp, subredditIcon } = props;
@@ -36,7 +36,9 @@ function ImageCard(props) {
             onClick={()=> window.open('http://www.reddit.com' + post.permalink)}
           />
         <CardContent sx={{ position: "absolute", bottom: '0px', right: '0px'}} >
-          <ArrowForwardIos fontSize='medium' onClick={() => setGalleryIndex((galleryIndex + 1) % post.gallery_data.items.length)} />
+          <IconButton size='medium' onClick={() => setGalleryIndex((galleryIndex + 1) % post.gallery_data.items.length)}>
+            <ArrowForwardIos />
+          </IconButton>
         </CardContent>
         </Box>)
       }
@@ -45,17 +47,9 @@ function ImageCard(props) {
         <Typography variant='body2'>{post.selftext}</Typography>
       </CardContent>
       <Box sx={{display: "flex", justifyContent: "space-between", flexDirection: "row", alignItems: "center" }}>
-          <CardActions>
-            <KeyboardArrowUp fontSize='large' />
-            <KeyboardArrowDown fontSize='large' />
-          </CardActions>
-        <Typography 
-          sx={{ fontSize: '10px', textDecoration: 'underline', color: 'blue', padding: "8px" }}
-          onClick={()=> window.open('http://www.reddit.com' + post.permalink)}
-        >
-          View on Reddit
-        </Typography>
-        </Box>
+        <VoteButtons fullname={post.fullname} />
+        <Button size='small' color='primary' sx={{ margin: '4px'}} onClick={()=> window.open('http://www.reddit.com' + post.permalink)}>View on Reddit</Button>
+      </Box>
     </Card>
   )
 }
