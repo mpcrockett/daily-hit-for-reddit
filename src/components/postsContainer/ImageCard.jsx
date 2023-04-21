@@ -21,13 +21,13 @@ function ImageCard(props) {
         <CardMedia
           component="img"
           height="290"
-          image={_.unescape(post.preview?.images[0].resolutions[2].url || post.url)}
+          image={ _.unescape(post?.preview?.images[0]?.resolutions[2]?.url || post.url)}
           alt="Post image"
           onClick={()=> window.open('http://www.reddit.com' + post.permalink)}
         />)
       }
       { post.gallery_data && (
-        <Box sx={{ position: "relative"}}>
+        <Box sx={{ position: "relative" }}>
           <CardMedia
             component="img"
             height="290"

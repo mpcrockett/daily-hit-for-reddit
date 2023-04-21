@@ -1,21 +1,16 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Box,  } from '@mui/material'
-import { getPosts } from './postSlice';
+import { useSelector } from 'react-redux';
+import { Box } from '@mui/material'
 import PostCard from './PostCard';
 
 const CardContainer = () => {
-  const dispatch = useDispatch();
-  const subreddits = useSelector((state) => state.posts.subreddits);
-  const posts = useSelector((state) => state.posts.posts);
 
-  useEffect(() => {
-    if(subreddits?.length) dispatch(getPosts());
-  }, [subreddits]);
-
+  const subPosts = useSelector((state) => state.posts.posts.subPosts);
+  const allPosts = useSelector((state) => state.posts.posts.allPosts);
+  const collection = subPosts.length > 0 ? subPosts : allPosts;
+  
   return (
     <Box sx={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", flexWrap: "wrap", marginTop: 4}}>
-      {posts.map(post => <PostCard key={post.id} post={post} /> )}
+      {collection.map(post => <PostCard key={post.id} post={post} /> )}
     </Box>
     
   );

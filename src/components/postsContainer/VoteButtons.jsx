@@ -6,17 +6,22 @@ import { voteOnPost } from './postSlice';
 function VoteButtons(props) {
   const { fullname } = props;
   const dispatch = useDispatch();
-  const { upvoted } = useSelector((state) => state.posts.posts.find(post => post.fullname === fullname));
-  const { downvoted } = useSelector((state) => state.posts.posts.find(post => post.fullname === fullname));
+
+  const posts = useSelector((state) => state.posts.posts);
+  const collection = posts.subPosts.length > 0 ? 'subposts' : 'allPosts';
+
+  const { upvoted } = useSelector((state) => state.posts.posts[collection].find(post => post.fullname === fullname));
+  const { downvoted } = useSelector((state) => state.posts.posts[collection].find(post => post.fullname === fullname));
+ 
 
   const handleUpvote = () => {
     const value = upvoted ? '0' : '1';
-    dispatch(voteOnPost(fullname, value));
+    dispatch(voteOnPost({collection, fullname, value}));
   }
 
   const handleDownvote = () => {
     const value = downvoted ? '0' : '-1';
-    dispatch(voteOnPost(fullname, value));
+    dispatch(voteOnPost({collection, fullname, value}));
   }
  
   return (

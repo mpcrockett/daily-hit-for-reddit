@@ -5,7 +5,10 @@ import _ from 'lodash';
 export const postSlice = createSlice({
   name: 'posts',
   initialState: {
-    posts: [],
+    posts: {
+      allPosts: [],
+      subPosts: []
+    },
     subreddits: []
   },
   reducers: {
@@ -35,35 +38,19 @@ export const postSlice = createSlice({
       });
       state.subreddits = newArray;
     },
-    postsFetched(state, action) {
-      const array = [];
-      action.payload.map((x) => array.push({
-        id: x.data.id,
-        permalink: x.data.permalink,
-        subreddit: x.data.subreddit,
-        subreddit_id: x.data.subreddit_id,
-        gallery_data: x.data.gallery_data || null,
-        preview: x.data.preview || null,
-        media_metadata: x.data.media_metadata || null,
-        title: x.data.title,
-        author: x.data.author,
-        flair : x.data.flair_text,
-        thumbnail: x.data.thumbnail,
-        selftext: x.data.selftext,
-        fullname: x.data.name,
-        url: x.data.url,
-        created: x.data.created,
-        upvoted: false,
-        downvoted: false
-      }));
-      state.posts = array;
+    allPostsFetched(state, action) {
+      state.posts.allPosts = action.payload;
+    },
+    subPostsFetched(state, action) {
+      state.posts.subPosts = [...state.posts.subPosts, ...action.payload];
     },
     voted(state, action) {
-      const array = state.posts.map((post) => {
-        if(post.fullname === action.payload.fullname) {
-          if(action.payload.value === '1') {
+      const { collection, fullname, value } = action.payload;
+      const array = state.posts[collection].map((post) => {
+        if(post.fullname === fullname) {
+          if(value === '1') {
             return {...post, upvoted: true, downvoted: false }
-          } else if (action.payload.value === '-1') {
+          } else if (value === '-1') {
             return {...post, upvoted: false, downvoted: true }
           } else {
             return {...post, upvoted: false, downvoted: false} 
@@ -72,7 +59,7 @@ export const postSlice = createSlice({
           return post
         }
       })
-      state.posts = array;
+      state.posts[collection] = array;
     }
   }
 });
@@ -81,36 +68,39 @@ export function getUserSubreddits(){
   return async function getUserSubredditsThunk(dispatch) {
     try {
       const response = await axios.get('/api/posts/subreddits', { withCredentials: true });
-      if(response.status === 200) dispatch(subredditsFetched(response.data.data.children));
+      if(response.status === 200) {
+        dispatch(subredditsFetched(response.data.subreddits));
+        dispatch(allPostsFetched(response.data.postData));
+      };
     } catch (error) {
       console.log({error: error.message })
     }
   };
 };
 
-export function getPosts(){
-  return async function getPostsThunk(dispatch, getState) {
-    const subreddits = getState().posts.subreddits;
-    try {
-      const response = await axios.post('/api/posts', { subreddits }, { withCredentials: true });
-      if(response.status === 200) dispatch(postsFetched(response.data.data.children));
-    } catch (error) {
-      console.log({ error: error.message })
-    }
-  };
-};
+// export function getPosts(){
+//   return async function getPostsThunk(dispatch, getState) {
+//     const subreddits = getState().posts.subreddits;
+//     try {
+//       const response = await axios.post('/api/posts', { subreddits }, { withCredentials: true });
+//       if(response.status === 200) dispatch(postsFetched(response.data.data.children));
+//     } catch (error) {
+//       console.log({ error: error.message })
+//     }
+//   };
+// };
 
-export function voteOnPost(fullname, value) {
+export function voteOnPost({collection, fullname, value}) {
   return async function upvotePostThunk(dispatch) {
     try {
       const response = await axios.post('/api/posts/vote', { fullname, value }, { withCredentials: true });
-      if(response.status === 200) dispatch(voted({ fullname, value }));
+      if(response.status === 200) dispatch(voted({ collection, fullname, value }));
     } catch (error) {
       console.log({ error: error.message })
     }
   }
 }
 
-export const { postsAdded, subredditsFetched, toggleSubreddit, postsFetched, voted } = postSlice.actions;
+export const { postsAdded, subredditsFetched, toggleSubreddit, allPostsFetched, voted } = postSlice.actions;
 
 export default postSlice.reducer;
