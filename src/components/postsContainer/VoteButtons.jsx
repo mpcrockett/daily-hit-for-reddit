@@ -8,7 +8,7 @@ function VoteButtons(props) {
   const dispatch = useDispatch();
 
   const posts = useSelector((state) => state.posts.posts);
-  const collection = posts.subPosts.length > 0 ? 'subposts' : 'allPosts';
+  const collection = posts.subPosts.length > 0 ? 'subPosts' : 'allPosts';
 
   const { upvoted } = useSelector((state) => state.posts.posts[collection].find(post => post.fullname === fullname));
   const { downvoted } = useSelector((state) => state.posts.posts[collection].find(post => post.fullname === fullname));
