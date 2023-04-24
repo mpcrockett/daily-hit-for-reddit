@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import FlexBetween from 'components/flexBetween';
 import ProfileButton from './ProfileButton.jsx';
 import SearchBar from './SearchBar.jsx';
+import Profile from './Profile.jsx';
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -42,7 +43,7 @@ const Navbar = () => {
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
           <DarkModeIcon />
-          {isLoggedIn ? (<ProfileButton />) : (<LoginButton />)}
+          {isLoggedIn && <Profile flexDirection={'row'}/>}
         </FlexBetween>
       ) : (
         <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)} >
@@ -69,7 +70,7 @@ const Navbar = () => {
             gap="3rem"
           >
            <DarkModeIcon />
-            {isLoggedIn ? (<ProfileButton onClick={() => navigate("/profile")}/>) : (<LoginButton />)}
+            {isLoggedIn && <Profile flexDirection={'column'}/>}
           </FlexBetween>
         </Box>
       )}
