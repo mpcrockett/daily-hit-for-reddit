@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme';
-import ProfilePage from 'pages/profilePage/ProfilePage';
 
 function App() {
   const mode = useSelector((state) => state.theme.mode);
@@ -19,7 +18,6 @@ function App() {
             <CssBaseline />
             <Routes>
               <Route path="/" element={ <HomePage /> }/>
-              <Route path="/profile" element={ <ProfilePage /> } />
               <Route path="/login/callback" element={<Auth />} />
             </Routes>
           </ThemeProvider>

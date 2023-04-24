@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Avatar, Button, Box, Typography } from '@mui/material'
-import { logOutUser } from '../../pages/profilePage/userSlice'
+import { logOutUser } from './userSlice'
 
 const Profile = (props) => {
   const { flexDirection }= props;
