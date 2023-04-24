@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios'
+import { clearPosts } from 'components/postsContainer/postSlice';
 
 export const userSlice = createSlice({
   name: "user",
@@ -52,7 +53,10 @@ export function logOutUser() {
     const response = await axios.delete('/api/auth/logout', {
       withCredentials: true
     });
-    if(response.status === 200) dispatch(loggedOut());
+    if(response.status === 200) {
+      dispatch(loggedOut());
+      dispatch(clearPosts());
+    };
   };
 };
 

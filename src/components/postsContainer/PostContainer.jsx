@@ -9,7 +9,7 @@ import { getUserSubreddits } from './postSlice'
 function PostContainer() {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.user.user.username);
-  const subreddits = useSelector((state) => state.posts.subreddits);
+  const posts = useSelector((state) => state.posts.posts.allPosts);
 
   useEffect(() => {
     if(username.length > 0) {
@@ -18,11 +18,15 @@ function PostContainer() {
   }, [username]);
 
   return (
-    <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", overflow: "auto"}}>
-      <Menu />
-      <CardContainer />
-    </Box>
+    <>
+      {posts?.length && 
+      <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", overflow: "auto"}}>
+        <Menu />
+        <CardContainer />
+      </Box>}
+    </>
+    
   )
 }
 
-export default PostContainer
+export default PostContainer;

@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Avatar, Chip, Box, useMediaQuery } from '@mui/material'
-import { toggleSubreddit } from '../postsContainer/postSlice'
+import { toggleSubreddit, getSubredditPosts, uncheckSubreddit } from '../postsContainer/postSlice'
 
 function Menu() {
   const { subreddits } = useSelector(state => state.posts);
-  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const dispatch = useDispatch();
 
-  const handleClick = (id) => {
-    dispatch(toggleSubreddit(id));
+  const handleClick = (sub) => {
+    if(!sub.active) {
+      dispatch(getSubredditPosts({id: sub.id, url: sub.url}));
+    } else {
+      dispatch(uncheckSubreddit(sub.id))
+    }
   };
 
   return (
@@ -22,7 +24,7 @@ function Menu() {
           key={sub.id} 
           variant={sub.active ? "outlined" : "primary"}
           sx={{ margin: 0.5, boxShadow: 0.5 }}
-          onClick={() => handleClick(sub.id)}
+          onClick={() => handleClick(sub)}
           clickable
           size="medium"
         /> 

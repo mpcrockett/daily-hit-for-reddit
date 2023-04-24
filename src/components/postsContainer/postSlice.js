@@ -28,15 +28,14 @@ export const postSlice = createSlice({
         ));
       state.subreddits = array;
     },
-    toggleSubreddit(state, action) {
-      const newArray = state.subreddits.map((sub) => {
+    checkSubreddit(state, action) {
+      state.subreddits = state.subreddits.map((sub) => {
         if(sub.id === action.payload) {
-          return {...sub, active: !sub.active }
+          return {...sub, active: true }
         } else {
           return {...sub}
         }
       });
-      state.subreddits = newArray;
     },
     allPostsFetched(state, action) {
       state.posts.allPosts = action.payload;
@@ -60,6 +59,36 @@ export const postSlice = createSlice({
         }
       })
       state.posts[collection] = array;
+    },
+    uncheckSubreddit(state, action) {
+      state.subreddits = state.subreddits.map((sub) => {
+        if(sub.id === action.payload) {
+          return {...sub, active: false }
+        } else {
+          return {...sub}
+        }
+      });
+      state.posts.subPosts = state.posts.subPosts.filter(
+        (posts => posts.subreddit_id !== 't5_' + action.payload)
+      );
+    },
+    clearPosts(state) {
+      state.posts = {
+        allPosts: [],
+        subPosts: []
+      };
+      state.subreddits = [];
+    },
+    addSubreddit(state, action) {
+      state.subreddits.push(
+        { id: action.payload.data.id,
+          name: action.payload.data.display_name_prefixed,
+          iconImg: action.payload.data.icon_img, 
+          description: action.payload.data.public_description, 
+          url: action.payload.data.url,
+          active: true
+        }
+      )
     }
   }
 });
@@ -78,17 +107,18 @@ export function getUserSubreddits(){
   };
 };
 
-// export function getPosts(){
-//   return async function getPostsThunk(dispatch, getState) {
-//     const subreddits = getState().posts.subreddits;
-//     try {
-//       const response = await axios.post('/api/posts', { subreddits }, { withCredentials: true });
-//       if(response.status === 200) dispatch(postsFetched(response.data.data.children));
-//     } catch (error) {
-//       console.log({ error: error.message })
-//     }
-//   };
-// };
+export function getSubredditPosts({ id, url}) {
+  return async function getPostsThunk(dispatch, getState) {
+    try {
+      dispatch(checkSubreddit(id));
+      const response = await axios.post('/api/posts', { subUrl: url }, { withCredentials: true });
+      if(response.status === 200) dispatch(subPostsFetched(response.data));
+    } catch (error) {
+      dispatch(uncheckSubreddit(id));
+      console.log({ error: error.message })
+    }
+  };
+};
 
 export function voteOnPost({collection, fullname, value}) {
   return async function upvotePostThunk(dispatch) {
@@ -101,6 +131,32 @@ export function voteOnPost({collection, fullname, value}) {
   }
 }
 
-export const { postsAdded, subredditsFetched, toggleSubreddit, allPostsFetched, voted } = postSlice.actions;
+export function addSubredditPosts(name) {
+  return async function subscribeThunk(dispatch) {
+    try {
+      const response = await axios.post('/api/subreddit', { name }, {
+        withCredentials: true
+      });
+      if(response.status === 200) {
+        dispatch(subPostsFetched(response.data.postData));
+        dispatch(addSubreddit(response.data.subData));
+      }
+    } catch (error) {
+      console.log({ error: error.message })
+    }
+  }
+}
+
+export const { 
+  postsAdded,
+  subredditsFetched, 
+  checkSubreddit, 
+  uncheckSubreddit, 
+  allPostsFetched, 
+  subPostsFetched, 
+  voted, 
+  clearPosts, 
+  addSubreddit 
+} = postSlice.actions;
 
 export default postSlice.reducer;
