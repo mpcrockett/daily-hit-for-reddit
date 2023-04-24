@@ -8,6 +8,8 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const refreshToken = require('./middleware/refreshToken');
 const postRouter = require('./routes/post');
+const searchRouter = require('./routes/search');
+const subredditRouter = require('./routes/subreddit');
 
 const port = process.env.PORT || 8001;
 const host = process.env.HOST || 'localhost';
@@ -32,8 +34,10 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', refreshToken, userRouter);
-app.use('/api/posts', refreshToken, postRouter); 
+app.use('/api/posts', refreshToken, postRouter);
+app.use('/api/search', refreshToken, searchRouter);
+app.use('/api/subreddit', subredditRouter);
 
 app.listen(port, host, () => {
-  console.log(`Starting at ${host}:${port}`) 
+  console.log(`Listening at ${host}:${port}`) 
 });

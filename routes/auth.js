@@ -45,6 +45,7 @@ authRouter.post('/login', async (req, res) => {
       refresh_token,
       expiresAt: Date.now() + (1000 * expires_in),
     };
+    
     res.status(200).send({ message: "Token set."});
   } catch (err) {
     res.status(500).send({message: err.message});

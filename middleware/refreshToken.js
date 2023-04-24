@@ -1,4 +1,5 @@
 const encodedHeader = require('../utils/encodedHeader');
+const axios = require('axios');
 
 module.exports = async (req, res, next) => {
   let expiresAt = req.session.token.expiresAt;
