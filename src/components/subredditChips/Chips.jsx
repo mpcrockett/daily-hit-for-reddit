@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Avatar, Chip, Box, useMediaQuery } from '@mui/material'
-import { toggleSubreddit, getSubredditPosts, uncheckSubreddit } from '../postsContainer/postSlice'
+import { Avatar, Chip, Box } from '@mui/material'
+import { getSubredditPosts, uncheckSubreddit } from '../postsContainer/postSlice'
 
 function Menu() {
   const { subreddits } = useSelector(state => state.posts);
@@ -9,7 +8,7 @@ function Menu() {
 
   const handleClick = (sub) => {
     if(!sub.active) {
-      dispatch(getSubredditPosts({id: sub.id, url: sub.url}));
+      dispatch(getSubredditPosts({id: sub.id, url: sub.url})); 
     } else {
       dispatch(uncheckSubreddit(sub.id))
     }
