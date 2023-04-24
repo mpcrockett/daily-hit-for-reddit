@@ -19,7 +19,7 @@ function PostContainer() {
 
   return (
     <>
-      {posts?.length && 
+      {posts?.length > 0 && 
       <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column", overflow: "auto"}}>
         <Menu />
         <CardContainer />

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Navbar from 'components/navBar/NavBar.jsx'
 import { getUserInfo } from '../profilePage/userSlice'
 import PostContainer from 'components/postsContainer/PostContainer';
+import LoginButton from './LoginButton';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,11 @@ const HomePage = () => {
   }, [loggedIn]);
 
   return ( 
-    <>
+   <> 
     <Navbar />
-    <PostContainer />
-    </>
+    {!loggedIn && <LoginButton /> }
+    {loggedIn && <PostContainer />}
+   </>
   );
 }
  

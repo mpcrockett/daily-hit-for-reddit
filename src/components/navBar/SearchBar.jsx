@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, InputBase, IconButton, Stack, Button } from "@mui/material"
 import FlexBetween from 'components/flexBetween';
 import { Search } from '@mui/icons-material';
@@ -11,6 +11,7 @@ function SearchBar({ backgroundColor }) {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
+  const { loggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
     if(searchQuery.length > 0) {
@@ -56,7 +57,13 @@ function SearchBar({ backgroundColor }) {
   return (
     <Box width='400px'>
       <FlexBetween backgroundColor={backgroundColor} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem" width='100%' >
-        <InputBase placeholder="Search for subreddits..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} width='100%' />
+        <InputBase 
+          placeholder="Search for subreddits..." 
+          value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)} 
+          width='100%'
+          disabled={!loggedIn} 
+        />
           <IconButton>
             <Search />
         </IconButton>

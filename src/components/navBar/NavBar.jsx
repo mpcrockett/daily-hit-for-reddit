@@ -8,11 +8,9 @@ import {
 } from "@mui/material";
 import { Menu, Close } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import LoginButton from 'components/navBar/LoginButton.jsx';
 import DarkModeIcon from './DarkMode.jsx';
 import { useNavigate } from 'react-router-dom';
 import FlexBetween from 'components/flexBetween';
-import ProfileButton from './ProfileButton.jsx';
 import SearchBar from './SearchBar.jsx';
 import Profile from './Profile.jsx';
 

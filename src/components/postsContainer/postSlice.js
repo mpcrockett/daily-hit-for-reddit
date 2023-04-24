@@ -89,7 +89,7 @@ export const postSlice = createSlice({
           active: true
         }
       )
-    }
+    },
   }
 });
 
