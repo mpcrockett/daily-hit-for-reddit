@@ -36,7 +36,11 @@ function ImageCard(props) {
             onClick={()=> window.open('http://www.reddit.com' + post.permalink)}
           />
         <CardContent sx={{ position: "absolute", bottom: '0px', right: '0px'}} >
-          <IconButton size='medium' onClick={() => setGalleryIndex((galleryIndex + 1) % post.gallery_data.items.length)}>
+          <IconButton 
+            size='medium' 
+            onClick={() => setGalleryIndex((galleryIndex + 1) % post.gallery_data.items.length)}
+            sx={{ backgroundColor: "white", opacity: '0.5' }}
+          >
             <ArrowForwardIos />
           </IconButton>
         </CardContent>

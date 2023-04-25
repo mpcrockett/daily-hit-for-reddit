@@ -7,9 +7,10 @@ export const postSlice = createSlice({
   initialState: {
     posts: {
       allPosts: [],
-      subPosts: []
+      subPosts: [],
     },
-    subreddits: []
+    subreddits: [],
+    votes: {}
   },
   reducers: {
     postsAdded(state, action){
@@ -25,7 +26,7 @@ export const postSlice = createSlice({
           url: x.data.url,
           active: false
         }
-        ));
+      ));
       state.subreddits = array;
     },
     checkSubreddit(state, action) {
@@ -39,26 +40,19 @@ export const postSlice = createSlice({
     },
     allPostsFetched(state, action) {
       state.posts.allPosts = action.payload;
+      action.payload.map((post) => {
+        return state.votes[post.fullname] = 0;
+      })
     },
     subPostsFetched(state, action) {
       state.posts.subPosts = [...state.posts.subPosts, ...action.payload];
+      action.payload.map((post) => {
+        return state.votes[post.fullname] = 0;
+      });
     },
     voted(state, action) {
-      const { collection, fullname, value } = action.payload;
-      const array = state.posts[collection].map((post) => {
-        if(post.fullname === fullname) {
-          if(value === '1') {
-            return {...post, upvoted: true, downvoted: false }
-          } else if (value === '-1') {
-            return {...post, upvoted: false, downvoted: true }
-          } else {
-            return {...post, upvoted: false, downvoted: false} 
-          }
-        } else { 
-          return post
-        }
-      })
-      state.posts[collection] = array;
+      const { fullname, value } = action.payload;
+      state.votes[fullname] = value;
     },
     uncheckSubreddit(state, action) {
       state.subreddits = state.subreddits.map((sub) => {
@@ -78,6 +72,12 @@ export const postSlice = createSlice({
         subPosts: []
       };
       state.subreddits = [];
+    },
+    clearSubPosts(state) {
+      state.posts = {
+        allPosts: [...state.posts.allPosts],
+        subPosts: []
+      }
     },
     addSubreddit(state, action) {
       state.subreddits.push(
@@ -120,11 +120,11 @@ export function getSubredditPosts({ id, url}) {
   };
 };
 
-export function voteOnPost({collection, fullname, value}) {
+export function voteOnPost({fullname, value}) {
   return async function upvotePostThunk(dispatch) {
     try {
       const response = await axios.post('/api/posts/vote', { fullname, value }, { withCredentials: true });
-      if(response.status === 200) dispatch(voted({ collection, fullname, value }));
+      if(response.status === 200) dispatch(voted({ fullname, value }));
     } catch (error) {
       console.log({ error: error.message })
     }
@@ -156,7 +156,8 @@ export const {
   subPostsFetched, 
   voted, 
   clearPosts, 
-  addSubreddit 
+  addSubreddit,
+  clearSubPosts
 } = postSlice.actions;
 
 export default postSlice.reducer;
