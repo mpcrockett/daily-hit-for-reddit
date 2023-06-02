@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, InputBase, IconButton, Stack, Button } from "@mui/material"
-import FlexBetween from '../flexBetween/FlexBetween';
+import FlexBetween from '../flexBetween/FlexBetween.js';
 import { Search } from '@mui/icons-material';
 import  axios from 'axios';
-import { addSubredditPosts } from '../postsContainer/postSlice'
+import { addSubredditPosts } from '../postsContainer/postSlice.js'
 
 
 function SearchBar({ backgroundColor }) {

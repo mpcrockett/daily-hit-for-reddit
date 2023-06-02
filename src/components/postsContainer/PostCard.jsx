@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import dateFormat from 'dateformat';
-import TextCard from './TextCard';
-import ImageCard from './ImageCard';
+import TextCard from './TextCard.jsx';
+import ImageCard from './ImageCard.jsx';
 
 
 export default function PostCard(props) {

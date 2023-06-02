@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box } from '@mui/material'
-import { clearSubPosts } from './postSlice';
-import PostCard from './PostCard';
+import { clearSubPosts } from './postSlice.js';
+import PostCard from './PostCard.jsx';
 import _ from 'lodash';
 
 const CardContainer = () => {

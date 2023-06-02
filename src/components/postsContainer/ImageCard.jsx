@@ -2,7 +2,7 @@ import { Box, Card, CardHeader, CardMedia, CardContent, Avatar, Typography, Icon
 import { ArrowForwardIos } from '@mui/icons-material';
 import { useState } from 'react';
 import _ from 'lodash';
-import VoteButtons from './VoteButtons';
+import VoteButtons from './VoteButtons.jsx';
 
 function ImageCard(props) {
   const { post, timestamp, subredditIcon } = props;

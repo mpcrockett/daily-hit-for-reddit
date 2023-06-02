@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios'
-import { clearPosts } from '../../components/postsContainer/postSlice';
+import { clearPosts } from '../../components/postsContainer/postSlice.js';
 
 export const userSlice = createSlice({
   name: "user",
