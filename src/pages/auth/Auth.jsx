@@ -10,8 +10,8 @@ export const Auth = () => {
   const location = window.location.href;
   const params = new URL(location).searchParams;
 
-  const [urlState, setUrlState] = useState( params.get('state') || null);
-  const [urlCode, setUrlCode] = useState(params.get('code'));
+  const [urlState] = useState( params.get('state') || null);
+  const [urlCode] = useState(params.get('code'));
 
   const isLoggedIn = useSelector((state) => state.user.loggedIn);
 

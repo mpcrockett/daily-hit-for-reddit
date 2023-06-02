@@ -10,11 +10,11 @@ import { Menu, Close } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import DarkModeIcon from './DarkMode.jsx';
 import { useNavigate } from 'react-router-dom';
-import FlexBetween from 'components/flexBetween';
+import FlexBetween from '../flexBetween/FlexBetween.js';
 import SearchBar from './SearchBar.jsx';
 import Profile from './Profile.jsx';
 
-const Navbar = () => {
+const NavBar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const navigate = useNavigate();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -76,4 +76,4 @@ const Navbar = () => {
    );
 }
  
-export default Navbar;
+export default NavBar;

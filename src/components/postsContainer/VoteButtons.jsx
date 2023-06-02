@@ -2,7 +2,6 @@ import { CardActions, IconButton } from '@mui/material';
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { voteOnPost } from './postSlice';
-import { useEffect, useState } from 'react';
 
 function VoteButtons(props) {
   const { fullname } = props;

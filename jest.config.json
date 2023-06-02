@@ -1,0 +1,11 @@
+{
+  "transform": {
+    "^.+\\.jsx?$": ["babel-jest", { "configFile": "./babel.config.json" }]
+  },
+  "moduleFileExtensions": ["js", "jsx", "json", "node"],
+  "moduleDirectories": ["node_modules", "src"],
+  "testEnvironment": "jsdom",
+  "globals": {
+    "NODE_ENV": "test"
+  }
+}

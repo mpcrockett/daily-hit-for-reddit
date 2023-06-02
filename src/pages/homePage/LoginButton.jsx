@@ -1,8 +1,6 @@
-import { Box, Button, Card, CardContent, CardActions, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Card, CardContent, CardActions, Typography } from '@mui/material';
 
 const LoginButton = () => {
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  
   return (
     <>
       <Box sx={{ width: '100%', height: '40%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

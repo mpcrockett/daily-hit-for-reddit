@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import Navbar from 'components/navBar/NavBar.jsx'
-import { getUserInfo } from '../../components/navBar/userSlice'
-import PostContainer from 'components/postsContainer/PostContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import NavBar from '../../components/navBar/NavBar';
+import { getUserInfo } from '../../components/navBar/userSlice';
+import PostContainer from '../../components/postsContainer/PostContainer';
 import LoginButton from './LoginButton';
 
 const HomePage = () => {
@@ -15,7 +15,7 @@ const HomePage = () => {
 
   return ( 
    <> 
-    <Navbar />
+    <NavBar />
     {!loggedIn && <LoginButton /> }
     {loggedIn && <PostContainer />}
    </>
