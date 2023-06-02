@@ -10,7 +10,7 @@ const HomePage = () => {
   const { loggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if(loggedIn) dispatch(getUserInfo());
+    if(loggedIn === true) dispatch(getUserInfo());
   }, [loggedIn]);
 
   return ( 

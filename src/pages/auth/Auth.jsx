@@ -10,18 +10,19 @@ export const Auth = () => {
   const location = window.location.href;
   const params = new URL(location).searchParams;
 
-  const [urlState] = useState( params.get('state') || null);
+  const [urlState] = useState(params.get('state') || null);
   const [urlCode] = useState(params.get('code'));
 
-  const isLoggedIn = useSelector((state) => state.user.loggedIn);
+  const { loggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(authorizeUser(urlCode, urlState));
   }, []);
   
   useEffect(() => {
-    if(isLoggedIn) navigate('/')
-  }, [isLoggedIn]);
+    if(loggedIn === true) navigate('/');
+  }, [loggedIn]);
+
   return  <></>
 };
 
