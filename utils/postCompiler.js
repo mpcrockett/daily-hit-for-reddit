@@ -48,6 +48,8 @@ const compileSubPosts = (response) => {
       fullname: post.data.name,
       url: post.data.url,
       created: post.data.created,
+      upvoted: false,
+      downvoted: false
     }
   })
 };
