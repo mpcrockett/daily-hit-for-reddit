@@ -4,12 +4,12 @@ const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-const authRouter = require('./routes/auth');
-const userRouter = require('./routes/user');
-const refreshToken = require('./middleware/refreshToken');
-const postRouter = require('./routes/post');
-const searchRouter = require('./routes/search');
-const subredditRouter = require('./routes/subreddit');
+const authRouter = require('./api/routes/auth');
+const userRouter = require('./api/routes/user');
+const refreshToken = require('./api/middleware/refreshToken');
+const postRouter = require('./api/routes/post');
+const searchRouter = require('./api/routes/search');
+const subredditRouter = require('./api/routes/subreddit');
 
 const port = process.env.PORT || 8001;
 const host = process.env.HOST || 'localhost';
