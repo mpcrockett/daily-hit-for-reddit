@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'dailyhit.herokuapp.com',
+      target: 'https://dailyhit.herokuapp.com',
       changeOrigin: true,
     })
   );
