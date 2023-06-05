@@ -38,7 +38,7 @@ app.use('/api/user', refreshToken, userRouter);
 app.use('/api/posts', refreshToken, postRouter);
 app.use('/api/search', refreshToken, searchRouter);
 app.use('/api/subreddit', subredditRouter);
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
 });
 
