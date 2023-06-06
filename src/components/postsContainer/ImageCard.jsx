@@ -26,12 +26,12 @@ function ImageCard(props) {
           onClick={()=> window.open('http://www.reddit.com' + post.permalink)}
         />)
       }
-      { post.gallery_data && (
+      { post.gallery_data !== null && (
         <Box sx={{ position: "relative" }}>
           <CardMedia
             component="img"
             height="290"
-            image={_.unescape(post.media_metadata[post.gallery_data.items[galleryIndex].media_id].p[2].u)}
+            image={_.unescape(post?.media_metadata[post?.gallery_data?.items[galleryIndex]?.media_id].p[2]?.u) || null}
             alt="Post image"
             onClick={()=> window.open('http://www.reddit.com' + post.permalink)}
           />
