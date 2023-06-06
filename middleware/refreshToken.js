@@ -2,7 +2,8 @@ const encodedHeader = require('../utils/encodedHeader');
 const axios = require('axios');
 
 module.exports = async (req, res, next) => {
-  let expiresAt = req.session.token.expiresAt;
+  let expiresAt = req.session.token.expiresAt || null;
+  if(!expiresAt) return res.status(403).send({ message: "Access Denied."});
 
   if( Date.now() > expiresAt ) {
     const response = await axios.post('https://www.reddit.com/api/v1/access_token', {
@@ -27,5 +28,6 @@ module.exports = async (req, res, next) => {
       expiresAt: Date.now() + (1000 * expires_in),
     };
   };
+
   next();
 };
