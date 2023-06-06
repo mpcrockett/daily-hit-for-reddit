@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const refreshToken = require('./middleware/refreshToken');
@@ -11,8 +10,7 @@ const postRouter = require('./routes/post');
 const searchRouter = require('./routes/search');
 const subredditRouter = require('./routes/subreddit');
 
-const port = process.env.PORT || 8001;
-const host = process.env.HOST || 'localhost';
+const port = process.env.PORT;
 
 const app = express();
 app.use(express.static(path.resolve(__dirname, './client/build')));
@@ -39,9 +37,9 @@ app.use('/api/posts', refreshToken, postRouter);
 app.use('/api/search', refreshToken, searchRouter);
 app.use('/api/subreddit', subredditRouter);
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, './client/build/index.html'));
 });
 
-app.listen(port, host, () => {
-  console.log(`Listening at ${host}:${port}`) 
+app.listen(port, () => {
+  console.log(`Listening at ${port}`) 
 });
