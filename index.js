@@ -13,7 +13,7 @@ const path = require('path');
 const port = process.env.PORT;
 
 const app = express();
-app.use(express.static(path.resolve(__dirname, './reddit-client/build')));
+app.use(express.static(path.resolve(__dirname, './client/build')));
 app.set('trust proxy', 1);
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -37,7 +37,7 @@ app.use('/api/posts', refreshToken, postRouter);
 app.use('/api/search', refreshToken, searchRouter);
 app.use('/api/subreddit', subredditRouter);
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './reddit-client/build/index.html'));
+  res.sendFile(path.resolve(__dirname, './client/build/index.html'));
 });
 
 app.listen(port, () => {
