@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const morgan = require('morgan');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const refreshToken = require('./middleware/refreshToken');
@@ -9,10 +10,21 @@ const postRouter = require('./routes/post');
 const searchRouter = require('./routes/search');
 const subredditRouter = require('./routes/subreddit');
 const path = require('path');
+const logger = require('./logger');
 
 const port = process.env.PORT;
 
 const app = express();
+
+const morganMiddleware = morgan(
+  ':method :url :status :res[content-length] - :response-time ms',
+  {
+    stream: {
+      write: (message) => logger.http(message.trim()),
+    },
+  }
+);
+
 app.use(express.static(path.resolve(__dirname, './client/build')));
 app.set('trust proxy', 1);
 app.use(session({
@@ -30,7 +42,7 @@ app.use(session({
 }));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
+app.use(morganMiddleware);
 app.use('/api/auth', authRouter);
 app.use('/api/user', refreshToken, userRouter);
 app.use('/api/posts', refreshToken, postRouter);
